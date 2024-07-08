@@ -1,0 +1,187 @@
+package me.alpha432.oyvey.features.modules.chat.chatmodifier;
+
+import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
+import net.minecraft.network.packet.s2c.play.GameMessageS2CPacket;
+import net.minecraft.text.Text;
+
+import java.util.Objects;
+
+import com.google.common.eventbus.Subscribe;
+
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
+import me.alpha432.oyvey.event.impl.PacketEvent;
+import me.alpha432.oyvey.features.modules.Module;
+import me.alpha432.oyvey.features.settings.Setting;
+import me.alpha432.oyvey.mixin.chatmodifier.IGameMessageS2CPacket;
+
+public class ChatModifier
+        extends Module {
+            private static ChatModifier INSTANCE = new ChatModifier();
+            //ChatSuffix
+            public Setting<Suffix> suffix = this.register(new Setting<Suffix>("Suffix", Suffix.NONE, "Your Suffix."));
+            public Setting<String> custom = this.register(new Setting("Custom", "cracked v2.0 plus ultra pro", v -> this.suffix.getValue() == Suffix.CUSTOM));
+            //TextColor
+            public Setting<Boolean> textColor = this.register(new Setting<Boolean>("GreenText", true));
+            //Others
+            public Setting<Boolean> infinite = this.register(new Setting<Boolean>("Infinite", Boolean.valueOf(false), "Makes your chat infinite."));
+            public Setting<Boolean> globalchat = this.register(new Setting<Boolean>("GlobalChat", false, "Global Chat Prefix"));
+            // Longer chat
+	        public Setting<Boolean> infiniteChatBox = this.register(new Setting<Boolean>("infiniteChatBox", false,"Makes your chat infinite."));
+	        public Setting<Boolean> longerChatHistory = this.register(new Setting<Boolean>("longerChatHistory", false));
+	        public Setting<Integer> longerChatLines = this.register(new Setting<Integer>("longerChatLines", 1000, 0, 1000));
+            public Setting<Boolean> keepHistory = this.register(new Setting<Boolean>("keepHistory", false,"What"));
+            public final IntList lines = new IntArrayList();
+            public static String string;
+            public static String VR;
+
+            public ChatModifier() {
+                super("ChatModifier", "Modifies your chat", Module.Category.CHAT, true, false, false);
+                this.setInstance();
+                //Test
+                //String[] a = "abcdefghijklmnopqrstuvwxyz".split("");
+                //String[] b = "ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴩqʀꜱᴛᴜᴠᴡxyᴢ".split("");
+                //for (int i = 0; i < a.length; i++) SMALL_CAPS.put(a[i].charAt(0), b[i].charAt(0));
+            }
+
+        
+            public static ChatModifier getInstance() {
+                if (INSTANCE == null) {
+                    INSTANCE = new ChatModifier();
+                }
+                return INSTANCE;
+            }
+        
+            private void setInstance() {
+                INSTANCE = this;
+            }
+
+            @Subscribe//@SubscribeEvent
+            public void onPacketSend(PacketEvent.Send event) {
+                if (/*event.getPacket() == 0 && */event.getPacket() instanceof ChatMessageC2SPacket) {
+                    ChatMessageC2SPacket packet = (ChatMessageC2SPacket)event.getPacket();
+                    String s = packet.chatMessage();
+                    if (packet.chatMessage().startsWith("/") || packet.chatMessage().startsWith("!")) {
+                        return;
+                    }
+        
+                    switch (this.suffix.getValue()) {
+                        case CRACKED: {
+                            VR = (this.textColor.getValue() != false ? ">" : "") + VR + " \u00bb " + this.convertToUnicode("cracked v2.0");
+                            break;
+                        }
+                    }
+                    switch (this.suffix.getValue()) {
+                        case FUTURE: {
+                            VR = (this.textColor.getValue() != false ? ">" : "") + VR + " \u00bb " + this.convertToUnicode("future v2.17.5");
+                            break;
+                        }
+                    }
+                    switch (this.suffix.getValue()) {
+                        case ABYSS: {
+                            VR = (this.textColor.getValue() != false ? ">" : "") + VR + " \u00bb " + this.convertToUnicode("abyss v7.0");
+                            break;
+                        }
+                    }
+                    switch (this.suffix.getValue()) {
+                        case PYRO: {
+                            VR = (this.textColor.getValue() != false ? ">" : "") + VR + " \u00bb " + this.convertToUnicode("pyro v6.0");
+                            break;
+                        }
+                    }
+                    switch (this.suffix.getValue()) {
+                        case CUSTOM: {
+                            VR = (this.textColor.getValue() != false ? ">" : "") + VR + " \u00bb " + this.convertToUnicode(this.custom.getValue());
+                            break;
+                        }
+                    }
+        
+                    if (packet.chatMessage().length() >= 256) {
+                        VR = packet.chatMessage().substring(0, 256);
+                    }
+
+                    if (Objects.equals(packet.chatMessage(), string)) {
+                        return;
+                    }
+
+           // string = packet.chatMessage() + VR;
+            mc.player.networkHandler.sendChatMessage(string = packet.chatMessage() + VR);//packet.chatMessage() + VR
+            event.setCancelled(true);
+                    //packet.chatMessage = s;
+                }
+            }
+
+
+
+            private String convertToUnicode(String base) {
+                String new_base = base;
+        
+                new_base = new_base.replace("a", "\u1d00");
+                new_base = new_base.replace("b", "\u0299");
+                new_base = new_base.replace("c", "\u1d04");
+                new_base = new_base.replace("d", "\u1d05");
+                new_base = new_base.replace("e", "\u1d07");
+                new_base = new_base.replace("f", "\u0493");
+                new_base = new_base.replace("g", "\u0262");
+                new_base = new_base.replace("h", "\u029c");
+                new_base = new_base.replace("i", "\u026a");
+                new_base = new_base.replace("j", "\u1d0a");
+                new_base = new_base.replace("k", "\u1d0b");
+                new_base = new_base.replace("l", "\u029f");
+                new_base = new_base.replace("m", "\u1d0d");
+                new_base = new_base.replace("n", "\u0274");
+                new_base = new_base.replace("o", "\u1d0f");
+                new_base = new_base.replace("p", "\u1d18");
+                new_base = new_base.replace("q", "\u01eb");
+                new_base = new_base.replace("r", "\u0280");
+                new_base = new_base.replace("s", "\u0455");
+                new_base = new_base.replace("t", "\u1d1b");
+                new_base = new_base.replace("u", "\u1d1c");
+                new_base = new_base.replace("v", "\u1d20");
+                new_base = new_base.replace("w", "\u1d21");
+                new_base = new_base.replace("x", "\u0445");
+                new_base = new_base.replace("y", "\u028f");
+                new_base = new_base.replace("z", "\u1d22");
+        
+                return new_base;
+            }
+
+    @Subscribe
+    public void onPacketReceive(PacketEvent.Receive event) {
+        if (event.getPacket() instanceof GameMessageS2CPacket pac && globalchat.getValue()) {
+            IGameMessageS2CPacket pac2 = event.getPacket();//event.getPacket();
+        pac2.setContent(Text.of("\u00A7b\u00A7l[\u00A7a\u00A7lCracked\u00A7b\u00A7l]\u00A7r ").copy().append(pac.content));
+        }
+    }
+
+    // Longer chat
+
+    public boolean isInfiniteChatBox() {
+        return isEnabled() && infiniteChatBox.getValue();//isEnale or IsOn
+    }
+
+    public boolean isLongerChat() {
+        return isEnabled() && longerChatHistory.getValue();//isEnale or IsOn
+    }
+
+    public boolean keepHistory() { return isEnabled() && keepHistory.getValue(); }//isEnale or IsOn
+
+    public int getExtraChatLines() {
+        return longerChatLines.getValue();
+    }
+        
+        
+            public String getCrackString(String message) {
+                return message = "\u00A7b\u00A7l[\u00A7a\u00A7lCracked\u00A7b\u00A7l]\u00A7r ";
+            }
+
+        
+            public enum Suffix {
+                NONE, 
+                CRACKED,
+                FUTURE,
+                ABYSS,
+                PYRO,
+                CUSTOM;
+            }
+}

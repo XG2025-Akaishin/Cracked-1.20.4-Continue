@@ -1,0 +1,16 @@
+accessWidener v2 named
+
+accessible field net/minecraft/client/MinecraftClient itemUseCooldown I
+accessible field net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket entityId I
+accessible method net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractTypeHandler getType ()Lnet/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractType;
+accessible class net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractType
+accessible field net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket type Lnet/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractTypeHandler;
+accessible method net/minecraft/client/render/GameRenderer renderHand (Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/Camera;F)V
+accessible field net/minecraft/network/packet/s2c/play/PlayerPositionLookS2CPacket pitch F
+accessible field net/minecraft/network/packet/s2c/play/PlayerPositionLookS2CPacket yaw F
+accessible field net/minecraft/client/network/ClientPlayerEntity lastSprinting Z
+accessible   class   net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractTypeHandler
+accessible   class   net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket$InteractType
+accessible class net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket
+accessible field net/minecraft/network/packet/s2c/play/GameMessageS2CPacket content Lnet/minecraft/text/Text;
+accessible class net/minecraft/network/packet/c2s/play/ChatMessageC2SPacket
